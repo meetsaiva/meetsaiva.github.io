@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SAIVA</title>
 
@@ -98,43 +98,13 @@
                     id="path4846" inkscape:connector-curvature="0" />
             </g>
         </svg>
-     inkscape:document-units="mm"
-     inkscape:current-layer="layer1"
-     showgrid="false"
-     inkscape:window-width="1366"
-     inkscape:window-height="715"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
-     inkscape:window-maximized="1" />
-  <metadata
-     id="metadata5904">
-    <rdf:RDF>
-      <cc:Work
-         rdf:about="">
-        <dc:format>image/svg+xml</dc:format>
-        <dc:type
-           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
-      </cc:Work>
-    </rdf:RDF>
-  </metadata>
-  <g
-     inkscape:label="Layer 1"
-     inkscape:gr id="layer1"
-              <p<pathath
-                    style="fill:#1a1a1a;stroke-width:0.26458332"
-                    d="m 249.9147 id="path4846"
-                 inkscape:connector-curvature="0" />
-          </g>
-</svg>
+    </div>
 
-    <!-- lotus watermark  -->
-    <div class="watermark">
-        <!-- simple line-art lotus -->
-        <svg viewBox="0 0 64 64" fill="none" stroke="#d4a85f" stroke-width="2" stroke-linecap="round"
-            stroke-linejoin="round">
-            <path d="M32 4c4 10 0 16-8 20 6 0 10 2 12 6 2-4 6-6 12-6-8-4-12-10-8-20Z" />
-            <path d="M10 34c10-2 16 2 20 10 4-8 10-12 20-10-10 0-16 4-20 14-4-10-10-14-20-14Z" />
+    <!-- Voiceflow will mount inside this element -->
+    <div id="saiva-chat"></div>
+
+    <!-- ── Voiceflow embed (unaltered) ── -->
+    <script type="text/javascript">
         (function (d, t) {
             var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
             v.onload = function () {
@@ -155,41 +125,7 @@
             v.type = "text/javascript"; s.parentNode.insertBefore(v, s);
         })(document, 'script');
     </script>
-        --vf-text:#1b2140;
-      }
-      /* message bubbles */
-      .vfrc-bubble{
-        font-size:18px !important;
-        line-height:1.6 !important;
-        border-radius:14px !important;
-        padding:14px 18px !important;
-      }
-      .vfrc-bubble--assistant{background:rgba(212,168,95,.15)!important}
-      .vfrc-bubble--user{background:rgba(27,33,64,.08)!important}
-      /* typing dots breathe slowly */
-      .vfrc-typing{animation:inhale 2s ease-in-out infinite}
-      @keyframes inhale{0%{opacity:.2}50%{opacity:1}100%{opacity:.2}}
-    `.trim();
 
-        /* initialise Voiceflow */
-        vf.chat.load({
-            verify: { projectID: "67dc5a3f760fc7fdaf1eb43d" },
-            url: "https://general-runtime.voiceflow.com",
-            versionID: "production",
-            voice: { url: "https://runtime-api.voiceflow.com" },
-            render: { mode: "embedded", target: document.getElementById("saiva-chat") },
-
-            /* overrides that correspond to the “Appearance & Style” tab
-               (handy if you prefer code-side changes)                    */
-            assistant: {
-                title: "Your SAIVA",
-                description: "Inner-journey super-guide",
-                inputPlaceholder: "Send a message…",
-                color: "#d4a85f",
-                stylesheet: "data:text/css;base64," + btoa(customCSS)
-            }
-        });
-    </script>
 </body>
 
 </html>
