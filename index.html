@@ -10,13 +10,9 @@
     <style>
         :root {
             --sand: #f5efe8;
-            /* background */
             --midnight: #0e1221;
-            /* darkest text */
             --indigo: #1b2140;
-            /* body text */
             --gold: #d4a85f;
-            /* accent — matches "Primary colour" */
         }
 
         *,
@@ -38,12 +34,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 1rem;
         }
 
         h1,
         h2,
         h3 {
-            font-family: sans-serif;
             font-weight: 400;
             letter-spacing: .02em;
             color: var(--midnight);
@@ -60,24 +56,84 @@
             opacity: .15;
         }
 
-
         .watermark svg {
             width: 2000px;
             fill: var(--gold);
             transform: translateY(30%);
         }
 
-        /* frame the embedded widget */
-        #saiva-chat {
+        /* shared styles for chat and instruction card */
+        #saiva-chat,
+        .instruction-card {
             width: 480px;
             max-width: 96vw;
+            background: #fff;
+            border-radius: 18px;
+        }
+
+        /* frame the embedded widget */
+        #saiva-chat {
             height: 720px;
             max-height: 96vh;
             border: 0;
-            border-radius: 18px;
             overflow: hidden;
             box-shadow: 0 18px 38px rgba(0, 0, 0, .14);
-            background: #fff;
+        }
+
+        /* instruction card */
+        .instruction-card {
+            border-radius: 12px;
+            padding: 20px 50px 20px 20px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, .08);
+            border: 1px solid rgba(212, 168, 95, .2);
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .instruction-card h3 {
+            margin: 0 0 12px;
+            font-size: 16px;
+            color: var(--midnight);
+            font-weight: bold;
+        }
+
+        .instruction-card p {
+            margin: 6px 0;
+            font-size: 14px;
+            color: var(--indigo);
+            line-height: 1.5;
+        }
+
+        .instruction-card .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 18px;
+            background: none;
+            border: none;
+            font-size: 18px;
+            color: var(--indigo);
+            cursor: pointer;
+            padding: 0;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.6;
+            transition: opacity 0.2s;
+        }
+
+        .instruction-card .close-btn:hover {
+            opacity: 1;
+        }
+
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: calc(100vh - 2rem);
+            justify-content: center;
+            gap: 20px;
         }
     </style>
 </head>
@@ -100,8 +156,26 @@
         </svg>
     </div>
 
-    <!-- Voiceflow will mount inside this element -->
-    <div id="saiva-chat"></div>
+    <!-- Instruction card and chat widget container -->
+    <div class="chat-container">
+        <!-- Instruction card -->
+        <div class="instruction-card" id="instruction-card">
+            <button class="close-btn" onclick="dismissInstructions()">×</button>
+            <h3>Voice Setup</h3>
+            <p><strong>Voice Output:</strong> Click the speaker icon at the top</p>
+            <p><strong>Voice Input:</strong> Use the microphone icon (Chrome only)</p>
+        </div>
+
+        <!-- Voiceflow will mount inside this element -->
+        <div id="saiva-chat"></div>
+    </div>
+
+    <!-- ── JavaScript functions ── -->
+    <script type="text/javascript">
+        function dismissInstructions() {
+            document.getElementById('instruction-card').style.display = 'none';
+        }
+    </script>
 
     <!-- ── Voiceflow embed (unaltered) ── -->
     <script type="text/javascript">
@@ -129,3 +203,4 @@
 </body>
 
 </html>
+
