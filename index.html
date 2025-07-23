@@ -80,52 +80,134 @@
             box-shadow: 0 18px 38px rgba(0, 0, 0, .14);
         }
 
-        /* instruction card */
-        .instruction-card {
-            border-radius: 12px;
-            padding: 20px 50px 20px 20px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, .08);
-            border: 1px solid rgba(212, 168, 95, .2);
+        /* instruction modal overlay */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+
+        .modal-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        /* instruction modal */
+        .instruction-modal {
+            width: 90vw;
+            max-width: 600px;
+            max-height: 85vh;
+            background: white;
+            border-radius: 18px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-header {
+            padding: 24px 24px 0;
+            border-bottom: 1px solid rgba(212, 168, 95, 0.2);
             flex-shrink: 0;
         }
 
-        .instruction-card h3 {
-            margin: 0 0 12px;
-            font-size: 16px;
+        .modal-header h2 {
+            margin: 0 0 8px;
+            font-size: 24px;
             color: var(--midnight);
-            font-weight: bold;
+            font-weight: 600;
         }
 
-        .instruction-card p {
-            margin: 6px 0;
+        .modal-header .subtitle {
+            margin: 0 0 16px;
+            font-size: 16px;
+            color: var(--gold);
+            font-style: italic;
+        }
+
+        .modal-content {
+            padding: 24px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .modal-content h3 {
+            margin: 24px 0 12px;
+            font-size: 18px;
+            color: var(--midnight);
+            font-weight: 600;
+        }
+
+        .modal-content h3:first-child {
+            margin-top: 0;
+        }
+
+        .modal-content h4 {
+            margin: 16px 0 8px;
+            font-size: 16px;
+            color: var(--midnight);
+            font-weight: 600;
+        }
+
+        .modal-content p {
+            margin: 8px 0;
+            font-size: 14px;
+            color: var(--indigo);
+            line-height: 1.6;
+        }
+
+        .modal-content ul {
+            margin: 8px 0;
+            padding-left: 20px;
+        }
+
+        .modal-content li {
+            margin: 4px 0;
             font-size: 14px;
             color: var(--indigo);
             line-height: 1.5;
         }
 
-        .instruction-card .close-btn {
+        .modal-content strong {
+            color: var(--midnight);
+        }
+
+        .close-btn {
             position: absolute;
-            top: 15px;
-            right: 18px;
+            top: 20px;
+            right: 20px;
             background: none;
             border: none;
-            font-size: 18px;
+            font-size: 24px;
             color: var(--indigo);
             cursor: pointer;
-            padding: 0;
-            width: 20px;
-            height: 20px;
+            padding: 4px;
+            width: 32px;
+            height: 32px;
             display: flex;
             align-items: center;
             justify-content: center;
             opacity: 0.6;
             transition: opacity 0.2s;
+            border-radius: 50%;
         }
 
-        .instruction-card .close-btn:hover {
+        .close-btn:hover {
             opacity: 1;
+            background: rgba(212, 168, 95, 0.1);
         }
+
 
         .chat-container {
             display: flex;
@@ -133,7 +215,6 @@
             align-items: center;
             height: calc(100vh - 2rem);
             justify-content: center;
-            gap: 20px;
         }
     </style>
 </head>
@@ -156,27 +237,90 @@
         </svg>
     </div>
 
-    <!-- Instruction card and chat widget container -->
-    <div class="chat-container">
-        <!-- Instruction card -->
-        <div class="instruction-card" id="instruction-card">
-            <button class="close-btn" onclick="dismissInstructions()">×</button>
-            <h3>How to Talk with SAIVA</h3>
-            <p><strong>To hear SAIVA</strong>, click the speaker icon on the top right.</p>
-            <p><strong>To speak to SAIVA</strong>, click on the microphone icon (only available on Chrome browser)</p>
-            <p>You can type out any edits after speaking. If you prefer not to speak, you can just type out your
-                responses.</p>
-        </div>
+    <!-- Instructions Modal -->
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="instruction-modal">
+            <button class="close-btn" onclick="closeModal()">×</button>
 
+            <div class="modal-header">
+                <h2>🌱 Welcome to SAIVA</h2>
+                <p class="subtitle">Your Personalized Microdosing Guide</p>
+            </div>
+
+            <div class="modal-content">
+                <h3>🌀 How This Works</h3>
+
+                <h4>Day 1: Grounding Preparation (~15 min)</h4>
+                <p>Craft your intention, share how you've been feeling, and reflect on what you're seeking. SAIVA
+                    listens deeply to understand you so it can personalize the guided microdose session.</p>
+
+                <h4>Day 2: Guided Microdose Session (~60 min)</h4>
+                <p>Receive real-time, adaptive prompts designed to help you stay present and go deeper during your
+                    microdose so you can draw meaningful clarity.</p>
+
+                <h4>Day 3: Personalized Integration (~15 min)</h4>
+                <p>Land the journey into real-world action. SAIVA helps you align insights into simple, powerful next
+                    steps so you achieve sustainable change.</p>
+
+                <hr style="border: none; border-top: 1px solid rgba(212, 168, 95, 0.2); margin: 24px 0;">
+
+                <h3>🔑 Key Features</h3>
+
+                <h4>🎙 Voice-to-Voice Experience</h4>
+                <p>Talk with SAIVA using your voice for a natural flow — especially helpful during altered states.</p>
+                <p><strong>To hear SAIVA</strong>, click the speaker icon on the top right of the chat box.</p>
+                <p><strong>To speak to SAIVA</strong>, click on the microphone icon on the bottom right of the chat box
+                    (only available on Chrome browsers, and <strong>not</strong> on mobile browsers)</p>
+                <p>You can type out any edits after speaking. If you prefer not to speak, you can just type out your
+                    responses.</p>
+
+                <h4>🧠 Personalized End-to-End Guidance</h4>
+                <p>Day 1 Intentional Preparation → Day 2 Adaptive Facilitation → Day 3 Actionable Integration =
+                    Breakthroughs that finally land.</p>
+
+                <h4>💾 Saved Conversation Memory</h4>
+                <p>Come back anytime. As long as you return on the same browser & device, SAIVA will remember where you
+                    left off.</p>
+
+                <h4>🪞 Intelligent Mirror Reflections</h4>
+                <p>The more you reveal, the more SAIVA reflects.</p>
+                <p>The more present you are, the more you'll see.</p>
+                <p>The deeper your honesty, the greater your insight.</p>
+                <p>Come with something real and challenging — and SAIVA will meet you there.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chat widget container -->
+    <div class="chat-container">
         <!-- Voiceflow will mount inside this element -->
         <div id="saiva-chat"></div>
     </div>
 
     <!-- ── JavaScript functions ── -->
     <script type="text/javascript">
-        function dismissInstructions() {
-            document.getElementById('instruction-card').style.display = 'none';
+        function openModal() {
+            document.getElementById('modal-overlay').classList.remove('hidden');
         }
+
+        function closeModal() {
+            document.getElementById('modal-overlay').classList.add('hidden');
+        }
+
+        // Close modal when clicking outside of it
+        document.getElementById('modal-overlay').addEventListener('click', function (e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
     </script>
 
     <!-- ── Voiceflow embed (unaltered) ── -->
@@ -187,7 +331,7 @@
                 window.voiceflow.chat.load({
                     verify: { projectID: '67dc5a3f760fc7fdaf1eb43d' },
                     url: 'https://general-runtime.voiceflow.com',
-                    versionID: 'production',
+                    versionID: 'development',
                     voice: {
                         url: "https://runtime-api.voiceflow.com"
                     },
@@ -205,4 +349,3 @@
 </body>
 
 </html>
-
